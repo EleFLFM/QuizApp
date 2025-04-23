@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Partial_B1</string>
+    <string name="title_add_question">Add Question</string>
+    <string name="hint_question">Write the question</string>
+    <string name="hint_option1">Option 1</string>
+    <string name="hint_option2">Option 2</string>
+    <string name="hint_option3">Option 3</string>
+    <string name="hint_option4">Option 4</string>
+    <string name="hint_correct_answer">Correct Answer (1-4)</string>
+    <string name="btn_save_question">Save Question</string>
+
+    <!-- Strings for Quiz Layout -->
+    <string name="label_question">Question</string>
+    <string name="label_score_zero">Score: 0</string>
+    <string name="btn_option1">Option 1</string>
+    <string name="btn_option2">Option 2</string>
+    <string name="btn_option3">Option 3</string>
+    <string name="btn_option4">Option 4</string>
+    <string name="btn_finish_quiz">Finish Quiz</string>
+
+    <!-- Strings for Question Management Layout -->
+    <string name="title_question_management">Question Management</string>
+    <string name="hint_write_question">Write the question</string>
+    <string name="hint_correct_answer_number">Correct answer number (1-4)</string>
+    <string name="btn_back">Back</string>
+    <string name="LuisFM">LFM</string>
+    <!-- Strings for Login Layout -->
+    <string name="title_login">Login</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login">Sign In</string>
+
+    <!-- Strings for Result Layout -->
+    <string name="label_final_score">Final Score: 0</string>
+    <string name="btn_share_score">Share Score</string>
+    <string name="btn_exit">Exit</string>
+</resources>

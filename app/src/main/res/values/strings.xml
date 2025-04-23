@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Parcial_B1</string>
+    <string name="title_add_question">Agregar Pregunta</string>
+    <string name="hint_question">Escribe la pregunta</string>
+    <string name="hint_option1">Opción 1</string>
+    <string name="hint_option2">Opción 2</string>
+    <string name="hint_option3">Opción 3</string>
+    <string name="hint_option4">Opción 4</string>
+    <string name="hint_correct_answer">Respuesta Correcta (1-4)</string>
+    <string name="btn_save_question">Guardar Pregunta</string>
+
+    <!-- Cadenas para Quiz Layout -->
+    <string name="label_question">Pregunta</string>
+    <string name="label_score_zero">Puntaje: 0</string>
+    <string name="btn_option1">Opción 1</string>
+    <string name="btn_option2">Opción 2</string>
+    <string name="btn_option3">Opción 3</string>
+    <string name="btn_option4">Opción 4</string>
+    <string name="btn_finish_quiz">Finalizar Quiz</string>
+
+    <!-- Cadenas para Question Management Layout -->
+    <string name="title_question_management">Gestión de Preguntas</string>
+    <string name="hint_write_question">Escribe la pregunta</string>
+    <string name="hint_correct_answer_number">Número de respuesta correcta (1-4)</string>
+    <string name="btn_back">Volver</string>
+
+    <!-- Cadenas para Login Layout -->
+    <string name="title_login">Inicio de Sesión</string>
+    <string name="hint_username">Usuario</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="btn_login">Iniciar Sesión</string>
+
+    <string name="LuisFM">LFM</string>
+    <!-- Cadenas para Result Layout -->
+    <string name="label_final_score">Puntaje final: 0</string>
+    <string name="btn_share_score">Compartir puntaje</string>
+    <string name="btn_exit">Salir</string>
+</resources>

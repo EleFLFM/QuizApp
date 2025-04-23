@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Imagen de fondo -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/fondoappquiz"
+        android:scaleType="centerCrop"
+        android:contentDescription="Imagen de fondo" />
+
+    <!-- Contenedor principal -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <!-- Logo de la aplicación -->
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            android:contentDescription="Logo de la aplicación"
+            android:src="@drawable/logoappquiz" />
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="205dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgLogo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="Bienvenido"
+            android:textAlignment="center"
+            android:textColor="#266fe4"
+            android:textSize="38sp"
+            android:textStyle="bold" />
+
+        <!-- Campo de usuario -->
+        <EditText
+            android:id="@+id/etUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtTitle"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/edit_text_background"
+            android:drawableStart="@drawable/ic_user"
+            android:drawablePadding="10dp"
+            android:hint="Nombre de usuario"
+            android:inputType="text"
+            android:padding="15dp" />
+
+        <!-- Campo de contraseña -->
+        <EditText
+            android:id="@+id/etContraseña"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etUsuario"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edit_text_background"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawablePadding="10dp"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:padding="15dp" />
+
+        <!-- Enlace para olvidó su contraseña -->
+        <TextView
+            android:id="@+id/txtForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etContraseña"
+            android:layout_alignEnd="@id/etContraseña"
+            android:layout_marginTop="8dp"
+            android:text="¿Olvidó su contraseña?"
+            android:textColor="#2196F3"
+            android:textSize="14sp" />
+
+        <!-- Botón de inicio de sesión -->
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtForgotPassword"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_background"
+            android:padding="15dp"
+            android:text="Iniciar Sesión"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <!-- Opción para registrarse -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnLogin"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtNoAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="¿No tiene una cuenta? "
+                android:textColor="#25DBC8"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtRegister"
+                android:layout_width="95dp"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="goToRegister"
+                android:text="Regístrese"
+                android:textColor="#2196F3"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

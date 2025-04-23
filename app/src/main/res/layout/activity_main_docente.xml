@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondoappquiz"
+    tools:context=".MainDocente">
+
+  <!-- Toolbar con título y botón de cerrar sesión -->
+  <com.google.android.material.appbar.MaterialToolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="#266fe4"
+      android:elevation="4dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Panel del Docente"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:text="Cerrar Sesión"
+        android:textColor="#FFFFFF"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
+  </com.google.android.material.appbar.MaterialToolbar>
+
+  <!-- Contenido principal -->
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@id/toolbar"
+      android:orientation="vertical"
+      android:padding="24dp"
+      android:gravity="center">
+
+    <!-- Botón Gestionar Estudiantes -->
+    <Button
+        android:id="@+id/btnGestionEstudiantes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/button_background"
+        android:paddingVertical="16dp"
+        android:text="Gestionar Estudiantes"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <!-- Botón Gestionar Preguntas -->
+    <Button
+        android:id="@+id/btnGestionPreguntas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:paddingVertical="16dp"
+        android:text="Gestionar Preguntas"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+  </LinearLayout>
+</RelativeLayout>
