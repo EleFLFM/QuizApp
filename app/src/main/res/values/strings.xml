@@ -24,6 +24,7 @@
     <string name="hint_correct_answer_number">Número de respuesta correcta (1-4)</string>
     <string name="btn_back">Volver</string>
 
+
     <!-- Cadenas para Login Layout -->
     <string name="title_login">Inicio de Sesión</string>
     <string name="hint_username">Usuario</string>
@@ -32,6 +33,7 @@
 
     <string name="LuisFM">LFM</string>
     <!-- Cadenas para Result Layout -->
+    <string name="share_via" translatable="false">Compartir via</string>
     <string name="label_final_score">Puntaje final: 0</string>
     <string name="btn_share_score">Compartir puntaje</string>
     <string name="btn_exit">Salir</string>

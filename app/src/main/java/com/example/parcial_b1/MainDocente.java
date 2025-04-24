@@ -18,12 +18,12 @@ public class MainDocente extends AppCompatActivity {
 
         // Inicializar botones
         Button btnCerrarSesion = findViewById(R.id.btnLogout);
-        Button btnGestionEstudiantes = findViewById(R.id.btnGestionEstudiantes);
+        //Button btnGestionEstudiantes = findViewById(R.id.btnGestionEstudiantes);
         Button btnGestionPreguntas = findViewById(R.id.btnGestionPreguntas);
 
         // Configurar listeners
         btnCerrarSesion.setOnClickListener(v -> cerrarSesion());
-        btnGestionEstudiantes.setOnClickListener(v -> irAGestionEstudiantes());
+        //btnGestionEstudiantes.setOnClickListener(v -> irAGestionEstudiantes());
         btnGestionPreguntas.setOnClickListener(v -> irAGestionPreguntas());
     }
 

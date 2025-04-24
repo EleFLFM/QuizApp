@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondoappquiz"
-    tools:context=".MainEstudianteActivity">
+    tools:context=".MainEstudiante">
 
     <!-- App Bar con botón de cerrar sesión -->
     <androidx.appcompat.widget.Toolbar

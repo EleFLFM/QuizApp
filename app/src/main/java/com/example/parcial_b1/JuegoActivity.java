@@ -1,184 +1,165 @@
 package com.example.parcial_b1;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class JuegoActivity extends AppCompatActivity {
+
     private TextView tvPregunta, tvPuntaje;
-    private Button btnOpcion1, btnOpcion2, btnOpcion3, btnOpcion4, btnFinalizarQuiz;
-    private DBHelper dbHelper;
-    private List<Pregunta> preguntas;
+    private MaterialButton btnOpcion1, btnOpcion2, btnOpcion3, btnOpcion4;
+    private DatabaseReference dbReference;
+    private List<Pregunta> listaPreguntas = new ArrayList<>();
     private int preguntaActual = 0;
     private int puntaje = 0;
+    private final int PUNTOS_POR_RESPUESTA = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_estudiante);
+        setContentView(R.layout.activity_preguntas_estudiante);
 
-        // Inicializar vistas
+        // Inicializar Firebase
+        dbReference = FirebaseDatabase.getInstance().getReference("preguntas");
+
+        // Configurar vistas
+        configurarVistas();
+
+        // Cargar preguntas
+        cargarPreguntasDeFirebase();
+    }
+
+    private void configurarVistas() {
         tvPregunta = findViewById(R.id.tvPregunta);
         tvPuntaje = findViewById(R.id.tvPuntaje);
         btnOpcion1 = findViewById(R.id.btnOpcion1);
         btnOpcion2 = findViewById(R.id.btnOpcion2);
         btnOpcion3 = findViewById(R.id.btnOpcion3);
         btnOpcion4 = findViewById(R.id.btnOpcion4);
-        btnFinalizarQuiz = findViewById(R.id.btnFinalizarQuiz);
 
-        dbHelper = new DBHelper(this);
-        preguntas = new ArrayList<>();
+        // Configurar listeners
+        View.OnClickListener opcionListener = v -> {
+            if (listaPreguntas.isEmpty()) return;
 
-        // Cargar preguntas desde la base de datos
-        cargarPreguntas();
+            int opcionSeleccionada = obtenerOpcionSeleccionada(v);
+            verificarRespuesta(opcionSeleccionada);
+        };
 
-        // Configurar listeners de botones
-        View.OnClickListener opcionClickListener = new View.OnClickListener() {
+        btnOpcion1.setOnClickListener(opcionListener);
+        btnOpcion2.setOnClickListener(opcionListener);
+        btnOpcion3.setOnClickListener(opcionListener);
+        btnOpcion4.setOnClickListener(opcionListener);
+
+        findViewById(R.id.btnFinalizarQuiz).setOnClickListener(v -> finalizarQuiz());
+    }
+
+    private void cargarPreguntasDeFirebase() {
+        dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                if (preguntas.isEmpty()) {
-                    Toast.makeText(JuegoActivity.this, "No hay preguntas disponibles", Toast.LENGTH_SHORT).show();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listaPreguntas.clear();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Pregunta pregunta = ds.getValue(Pregunta.class);
+                    if (pregunta != null) {
+                        pregunta.setId(ds.getKey()); // Asignar el ID de Firebase
+                        listaPreguntas.add(pregunta);
+                    }
+                }
+
+                if (listaPreguntas.isEmpty()) {
+                    mostrarError("No hay preguntas disponibles");
                     return;
                 }
 
-                int opcionSeleccionada;
-                if (v.getId() == R.id.btnOpcion1) opcionSeleccionada = 1;
-                else if (v.getId() == R.id.btnOpcion2) opcionSeleccionada = 2;
-                else if (v.getId() == R.id.btnOpcion3) opcionSeleccionada = 3;
-                else opcionSeleccionada = 4;
+                // Mezclar preguntas y limitar cantidad si es necesario
+                Collections.shuffle(listaPreguntas);
+                if (listaPreguntas.size() > 10) {
+                    listaPreguntas = listaPreguntas.subList(0, 10);
+                }
 
-                verificarRespuesta(opcionSeleccionada);
+                mostrarPreguntaActual();
             }
-        };
 
-        btnOpcion1.setOnClickListener(opcionClickListener);
-        btnOpcion2.setOnClickListener(opcionClickListener);
-        btnOpcion3.setOnClickListener(opcionClickListener);
-        btnOpcion4.setOnClickListener(opcionClickListener);
-
-        btnFinalizarQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                finalizarQuiz();
+            public void onCancelled(@NonNull DatabaseError error) {
+                mostrarError("Error al cargar preguntas: " + error.getMessage());
             }
         });
-
-        // Mostrar la primera pregunta
-        mostrarPreguntaActual();
-    }
-    private void cargarPreguntas() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = null;
-
-        try {
-            // Verificar si hay preguntas en la base de datos
-            cursor = db.rawQuery("SELECT COUNT(*) FROM preguntas", null);
-            cursor.moveToFirst();
-            int count = cursor.getInt(0);
-            cursor.close();
-
-            if (count == 0) {
-                Toast.makeText(this, "No hay preguntas en la base de datos", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            // Cargar las preguntas desde la base de datos
-            cursor = db.rawQuery("SELECT * FROM preguntas", null);
-
-            // Obtener los índices de las columnas
-            int idIndex = cursor.getColumnIndexOrThrow("id"); // ID único de la pregunta
-            int preguntaIndex = cursor.getColumnIndexOrThrow("pregunta");
-            int opcion1Index = cursor.getColumnIndexOrThrow("opcion1");
-            int opcion2Index = cursor.getColumnIndexOrThrow("opcion2");
-            int opcion3Index = cursor.getColumnIndexOrThrow("opcion3");
-            int opcion4Index = cursor.getColumnIndexOrThrow("opcion4");
-            int respuestaCorrectaIndex = cursor.getColumnIndexOrThrow("respuesta_correcta");
-
-            while (cursor.moveToNext()) {
-                // Extraer valores de la fila actual
-                int id = cursor.getInt(idIndex);
-                String pregunta = cursor.getString(preguntaIndex);
-                String opcion1 = cursor.getString(opcion1Index);
-                String opcion2 = cursor.getString(opcion2Index);
-                String opcion3 = cursor.getString(opcion3Index);
-                String opcion4 = cursor.getString(opcion4Index);
-                int respuestaCorrecta = cursor.getInt(respuestaCorrectaIndex);
-
-                // Crear un objeto Pregunta y agregarlo a la lista
-                preguntas.add(new Pregunta(id, pregunta, opcion1, opcion2, opcion3, opcion4, respuestaCorrecta));
-            }
-
-            if (preguntas.isEmpty()) {
-                Toast.makeText(this, "Error al cargar las preguntas", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Se cargaron " + preguntas.size() + " preguntas", Toast.LENGTH_SHORT).show();
-            }
-
-        } catch (Exception e) {
-            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
     }
 
     private void mostrarPreguntaActual() {
-        if (preguntas.isEmpty()) {
-            tvPregunta.setText("No hay preguntas disponibles");
-            deshabilitarBotones();
-            return;
-        }
-
-        if (preguntaActual >= preguntas.size()) {
+        if (preguntaActual >= listaPreguntas.size()) {
             finalizarQuiz();
             return;
         }
 
-        Pregunta preguntaActualObj = preguntas.get(preguntaActual);
-        tvPregunta.setText(preguntaActualObj.getPregunta());
-        btnOpcion1.setText(preguntaActualObj.getOpcion1());
-        btnOpcion2.setText(preguntaActualObj.getOpcion2());
-        btnOpcion3.setText(preguntaActualObj.getOpcion3());
-        btnOpcion4.setText(preguntaActualObj.getOpcion4());
-        tvPuntaje.setText("Puntaje: " + puntaje);
+        Pregunta pregunta = listaPreguntas.get(preguntaActual);
+        tvPregunta.setText(pregunta.getTexto());
+        btnOpcion1.setText(pregunta.getOpcion1());
+        btnOpcion2.setText(pregunta.getOpcion2());
+        btnOpcion3.setText(pregunta.getOpcion3());
+        btnOpcion4.setText(pregunta.getOpcion4());
+        actualizarPuntaje();
+        habilitarBotones();
+    }
+
+    private int obtenerOpcionSeleccionada(View v) {
+        if (v.getId() == R.id.btnOpcion1) return 1;
+        if (v.getId() == R.id.btnOpcion2) return 2;
+        if (v.getId() == R.id.btnOpcion3) return 3;
+        return 4;
     }
 
     private void verificarRespuesta(int opcionSeleccionada) {
-        Pregunta preguntaActualObj = preguntas.get(preguntaActual);
-        if (opcionSeleccionada == preguntaActualObj.getRespuestaCorrecta()) {
-            puntaje += 10;
-            Toast.makeText(this, "¡Correcto!", Toast.LENGTH_SHORT).show();
+        deshabilitarBotones();
+
+        Pregunta pregunta = listaPreguntas.get(preguntaActual);
+        boolean esCorrecta = opcionSeleccionada == pregunta.getRespuestaCorrecta();
+
+        if (esCorrecta) {
+            puntaje += PUNTOS_POR_RESPUESTA;
+            mostrarMensaje("¡Correcto!");
         } else {
-            Toast.makeText(this, "Incorrecto. La respuesta correcta era la opción " +
-                    preguntaActualObj.getRespuestaCorrecta(), Toast.LENGTH_SHORT).show();
+            mostrarMensaje("Incorrecto. La respuesta era: " + pregunta.getRespuestaCorrecta());
         }
 
-        preguntaActual++;
-        if (preguntaActual < preguntas.size()) {
+        // Retraso antes de siguiente pregunta
+        btnOpcion1.postDelayed(() -> {
+            preguntaActual++;
             mostrarPreguntaActual();
-        } else {
-            finalizarQuiz();
-        }
+        }, 1500);
+    }
+
+    private void actualizarPuntaje() {
+        tvPuntaje.setText(String.format("Puntaje: %d", puntaje));
     }
 
     private void finalizarQuiz() {
         Intent intent = new Intent(this, ResultadoActivity.class);
         intent.putExtra("puntaje", puntaje);
-        intent.putExtra("totalPreguntas", preguntas.size());
+        intent.putExtra("total_preguntas", listaPreguntas.size());
         startActivity(intent);
         finish();
+    }
+
+    private void habilitarBotones() {
+        btnOpcion1.setEnabled(true);
+        btnOpcion2.setEnabled(true);
+        btnOpcion3.setEnabled(true);
+        btnOpcion4.setEnabled(true);
     }
 
     private void deshabilitarBotones() {
@@ -188,11 +169,12 @@ public class JuegoActivity extends AppCompatActivity {
         btnOpcion4.setEnabled(false);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (dbHelper != null) {
-            dbHelper.close();
-        }
+    private void mostrarMensaje(String mensaje) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+    }
+
+    private void mostrarError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+        finish();
     }
 }

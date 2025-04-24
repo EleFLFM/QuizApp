@@ -76,17 +76,16 @@
             android:inputType="textPassword"/>
 
         <!-- Botón de registro -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegister"
+            style="@style/BlueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/etContraseña"
             android:layout_marginTop="30dp"
-            android:background="@drawable/button_background"
             android:padding="15dp"
             android:text="Registrarse"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
             android:textSize="16sp" />
 
         <!-- Opción para iniciar sesión -->

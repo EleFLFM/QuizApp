@@ -2,30 +2,60 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="16dp">
 
     <!-- Texto de la pregunta -->
     <TextView
         android:id="@+id/tvPregunta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="#333333"
+        android:textColor="#000000"
+        android:textColorLink="#000000"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/btnEliminar"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        tools:text="¿Cuál es la capital de Francia?" />
 
-    <!-- Botón eliminar -->
+    <!-- Opciones de respuesta -->
+    <TextView
+        android:id="@+id/tvOpciones"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/btnEliminar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPregunta"
+        tools:text="1) París\n2) Madrid\n3) Roma\n4) Berlín" />
+
+    <!-- Respuesta correcta -->
+    <TextView
+        android:id="@+id/tvRespuesta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#0B53BF"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/btnEliminar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvOpciones"
+        tools:text="Respuesta correcta: 1" />
+
+    <!-- Botón de eliminar (alineado a la derecha) -->
     <ImageButton
         android:id="@+id/btnEliminar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="?selectableItemBackgroundBorderless"
-        android:contentDescription="Eliminar"
-        android:scaleType="fitStart"
+        android:layout_marginEnd="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Eliminar pregunta"
+        android:scaleType="centerInside"
         android:src="@drawable/ic_delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -2,58 +2,88 @@ package com.example.parcial_b1;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.button.MaterialButton;
 
-/**
- * Actividad que muestra el resultado del quiz, mostrando el puntaje obtenido por el usuario
- * y ofreciendo opciones para compartir el resultado o salir de la aplicación.
- */
 public class ResultadoActivity extends AppCompatActivity {
-    private TextView tvResultado;  // TextView que muestra el puntaje final
-    private Button btnCompartir, btnSalir;  // Botones para compartir el puntaje y salir
 
-    /**
-     * Método llamado cuando la actividad es creada.
-     * Aquí se inicializan las vistas y se configuran los botones para las acciones del usuario.
-     *
-     * @param savedInstanceState Información previa guardada sobre el estado de la actividad (si es necesario).
-     */
+    private TextView tvResultado;
+    private MaterialButton btnCompartir, btnSalir;
+    private int puntaje;
+    private int total_preguntas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resultado);  // Establece el layout de la actividad
+        setContentView(R.layout.activity_resultado);
 
-        // Inicializar las vistas
+        // Inicializar vistas
+        initViews();
+
+        // Obtener datos del intent
+        getIntentData();
+
+        // Mostrar resultado
+        mostrarResultado();
+
+    }
+
+    private void initViews() {
         tvResultado = findViewById(R.id.tvResultado);
         btnCompartir = findViewById(R.id.btnCompartir);
         btnSalir = findViewById(R.id.btnSalir);
+    }
 
-        // Obtener el puntaje y el total de preguntas desde el Intent
-        int puntaje = getIntent().getIntExtra("puntaje", 0);  // Obtiene el puntaje desde el Intent
-        int totalPreguntas = getIntent().getIntExtra("totalPreguntas", 0);  // Obtiene el total de preguntas
+    private void getIntentData() {
+        puntaje = getIntent().getIntExtra("puntaje", 0);
+        total_preguntas = getIntent().getIntExtra("totalPreguntas", 0);
+    }
 
-        // Mostrar el puntaje en la TextView
-        tvResultado.setText("Puntaje final: " + puntaje + " / " + (totalPreguntas * 10));
+    private void mostrarResultado() {
+        int puntajeMaximo = total_preguntas * 10; // Cada pregunta vale 10 puntos
+        String resultado = String.format("Puntaje final: %d/%d", puntaje, puntajeMaximo);
+        tvResultado.setText(resultado);
 
-        // Configurar el botón de compartir
-        btnCompartir.setOnClickListener(v -> {
-            // Crear el mensaje de puntaje para compartir
-            String mensaje = "¡Obtuve " + puntaje + " puntos de " + (totalPreguntas * 10) +
-                    " posibles en el Quiz App!";
+        // Opcional: Cambiar color según el puntaje
+        if (puntaje >= puntajeMaximo * 0.8) {
+            tvResultado.setTextColor(getResources().getColor(R.color.green));
+        } else if (puntaje >= puntajeMaximo * 0.5) {
+            tvResultado.setTextColor(getResources().getColor(R.color.orange));
+        } else {
+            tvResultado.setTextColor(getResources().getColor(R.color.red));
+        }
+    }
 
-            // Crear un Intent para compartir el mensaje
-            Intent compartirIntent = new Intent(Intent.ACTION_SEND);
-            compartirIntent.setType("text/plain");  // Especificar el tipo de contenido
-            compartirIntent.putExtra(Intent.EXTRA_TEXT, mensaje);  // Agregar el mensaje al Intent
+    private void setupListeners() {
+        // Botón compartir
+        btnCompartir.setOnClickListener(v -> compartirResultado());
 
-            // Iniciar la actividad de compartir
-            startActivity(Intent.createChooser(compartirIntent, "Compartir usando"));
-        });
+        // Botón salir - CORRECCIÓN: Usar finish() en lugar de crear nueva instancia
+        btnSalir.setOnClickListener(v -> finish());
+    }
 
-        // Configurar el botón de salir
-        btnSalir.setOnClickListener(v -> finish());  // Termina la actividad actual y regresa a la anterior
+    private void compartirResultado() {
+        String mensaje = String.format(
+                "¡Obtuve %d de %d puntos en el Quiz App! ¿Crees que puedes superarme?",
+                puntaje,
+                total_preguntas * 10
+        );
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, mensaje);
+
+        startActivity(Intent.createChooser(
+                shareIntent,
+                getString(R.string.share_via)
+        ));
+    }
+    public void salir(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 }

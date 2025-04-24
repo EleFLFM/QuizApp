@@ -3,7 +3,6 @@ package com.example.parcial_b1;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,16 +12,16 @@ import java.util.List;
 
 public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.PreguntaViewHolder> {
 
-    private final List<Pregunta> preguntas;
-    private final OnPreguntaDeleteListener onDeleteListener;
-
-    public interface OnPreguntaDeleteListener {
-        void onDelete(Pregunta pregunta);
+    public interface OnPreguntaClickListener {
+        void onPreguntaClick(Pregunta pregunta);
     }
 
-    public PreguntaAdapter(List<Pregunta> preguntas, OnPreguntaDeleteListener onDeleteListener) {
+    private List<Pregunta> preguntas;
+    private OnPreguntaClickListener listener;
+
+    public PreguntaAdapter(List<Pregunta> preguntas, OnPreguntaClickListener listener) {
         this.preguntas = preguntas;
-        this.onDeleteListener = onDeleteListener;
+        this.listener = listener;
     }
 
     @NonNull
@@ -36,12 +35,18 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.Pregun
     @Override
     public void onBindViewHolder(@NonNull PreguntaViewHolder holder, int position) {
         Pregunta pregunta = preguntas.get(position);
-        holder.tvPregunta.setText(pregunta.getPregunta());
+        holder.tvPregunta.setText(pregunta.getTexto());
+        holder.tvOpciones.setText(
+                "1) " + pregunta.getOpcion1() + "\n" +
+                        "2) " + pregunta.getOpcion2() + "\n" +
+                        "3) " + pregunta.getOpcion3() + "\n" +
+                        "4) " + pregunta.getOpcion4()
+        );
+        holder.tvRespuesta.setText("Respuesta correcta: " + pregunta.getRespuestaCorrecta());
 
-        // Configurar botón eliminar
-        holder.btnEliminar.setOnClickListener(v -> {
-            if (onDeleteListener != null) {
-                onDeleteListener.onDelete(pregunta);
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onPreguntaClick(pregunta);
             }
         });
     }
@@ -52,13 +57,13 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.Pregun
     }
 
     static class PreguntaViewHolder extends RecyclerView.ViewHolder {
-        TextView tvPregunta;
-        ImageButton btnEliminar;
+        TextView tvPregunta, tvOpciones, tvRespuesta;
 
         public PreguntaViewHolder(@NonNull View itemView) {
             super(itemView);
             tvPregunta = itemView.findViewById(R.id.tvPregunta);
-            btnEliminar = itemView.findViewById(R.id.btnEliminar);
+            tvOpciones = itemView.findViewById(R.id.tvOpciones);
+            tvRespuesta = itemView.findViewById(R.id.tvRespuesta);
         }
     }
 }

@@ -100,7 +100,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 int respuestaCorrecta = cursor.getInt(cursor.getColumnIndex("respuesta_correcta"));
 
                 // Crear objeto Pregunta y agregarlo a la lista
-                preguntas.add(new Pregunta(id, pregunta, opcion1, opcion2, opcion3, opcion4, respuestaCorrecta));
+               // preguntas.add(new Pregunta(id, pregunta, opcion1, opcion2, opcion3, opcion4, respuestaCorrecta));
             } while (cursor.moveToNext());
         }
 

@@ -45,17 +45,17 @@
       android:gravity="center">
 
     <!-- Botón Gestionar Estudiantes -->
-    <Button
-        android:id="@+id/btnGestionEstudiantes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/button_background"
-        android:paddingVertical="16dp"
-        android:text="Gestionar Estudiantes"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+<!--    <Button-->
+<!--        android:id="@+id/btnGestionEstudiantes"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="24dp"-->
+<!--        android:background="@drawable/button_background"-->
+<!--        android:paddingVertical="16dp"-->
+<!--        android:text="Gestionar Estudiantes"-->
+<!--        android:textAllCaps="false"-->
+<!--        android:textColor="#FFFFFF"-->
+<!--        android:textSize="18sp" />-->
 
     <!-- Botón Gestionar Preguntas -->
     <Button
