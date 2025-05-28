@@ -25,9 +25,9 @@ public class ResultadoActivity extends AppCompatActivity {
 
         // Obtener datos del intent (puntaje)
         int puntaje = getIntent().getIntExtra("puntaje", 0);
-        int total = getIntent().getIntExtra("total", 100); // valor por defecto
+        int total = getIntent().getIntExtra("total_preguntas", 100); // valor por defecto
 
-        String resultado = "Puntaje final: " + puntaje + "/" + total;
+        String resultado = "Puntaje final: " + puntaje + "/" + total*10;
         tvResultado.setText(resultado);
 
         btnCompartir.setOnClickListener(v -> compartirResultado(resultado));
