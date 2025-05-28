@@ -7,82 +7,97 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_quiz">
 
-    <com.google.android.material.card.MaterialCardView
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.9">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:layout_margin="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
 
-            <!-- Pregunta -->
-            <TextView
-                android:id="@+id/tvPregunta"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:textAlignment="center"
-                android:textColor="#000"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                tools:text="¿Cuál es la capital de Francia?" />
+                android:orientation="vertical"
+                android:padding="24dp">
 
-            <!-- Puntaje -->
-            <TextView
-                android:id="@+id/tvPuntaje"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:textAlignment="center"
-                android:textColor="#666"
-                android:textSize="18sp"
-                tools:text="Puntaje: 0" />
+                <!-- Imagen de la pregunta -->
+                <ImageView
+                    android:id="@+id/ivPreguntaImagen"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="16dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
 
-            <!-- Opciones -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnOpcion1"
-                style="@style/QuizOptionButton"
-                android:layout_marginBottom="8dp"
-                tools:text="París" />
+                <!-- Pregunta -->
+                <TextView
+                    android:id="@+id/tvPregunta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:text="¿Cuál es la capital de Francia?" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnOpcion2"
-                style="@style/QuizOptionButton"
-                android:layout_marginBottom="8dp"
-                tools:text="Madrid" />
+                <!-- Puntaje -->
+                <TextView
+                    android:id="@+id/tvPuntaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:textAlignment="center"
+                    android:textColor="#666"
+                    android:textSize="18sp"
+                    tools:text="Puntaje: 0" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnOpcion3"
-                style="@style/QuizOptionButton"
-                android:layout_marginBottom="8dp"
-                tools:text="Londres" />
+                <!-- Opciones -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOpcion1"
+                    style="@style/QuizOptionButton"
+                    android:layout_marginBottom="8dp"
+                    tools:text="París" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnOpcion4"
-                style="@style/QuizOptionButton"
-                android:layout_marginBottom="16dp"
-                tools:text="Berlín" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOpcion2"
+                    style="@style/QuizOptionButton"
+                    android:layout_marginBottom="8dp"
+                    tools:text="Madrid" />
 
-            <!-- Botón Finalizar -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFinalizarQuiz"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/btn_finish_quiz"
-                app:backgroundTint="@color/blue_button"
-                app:cornerRadius="8dp" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOpcion3"
+                    style="@style/QuizOptionButton"
+                    android:layout_marginBottom="8dp"
+                    tools:text="Londres" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOpcion4"
+                    style="@style/QuizOptionButton"
+                    android:layout_marginBottom="16dp"
+                    tools:text="Berlín" />
+
+                <!-- Botón Finalizar -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFinalizarQuiz"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/btn_finish_quiz"
+                    app:backgroundTint="@color/blue_button"
+                    app:cornerRadius="8dp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,39 +8,36 @@
     android:background="@drawable/fondoappquiz"
     tools:context=".GestionPreguntasActivity">
 
-    <!-- AppBar con título y botón de acción -->
+    <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:background="#266fe4"
+        android:title="Gestión de Preguntas"
+        android:titleTextColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gestión de Preguntas"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+    <!-- Botón Volver separado -->
+    <Button
+        android:id="@+id/btnVolver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Volver"
+        android:textColor="#FFFFFF"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp" />
 
-        <Button
-            android:id="@+id/btnVolver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="16dp"
-            android:text="Volver"
-            android:textColor="#FFFFFF"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-    </com.google.android.material.appbar.MaterialToolbar>
-
-    <!-- Contenedor principal con Scroll -->
+    <!-- Contenido principal -->
     <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +49,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- CardView para el formulario -->
+            <!-- Card con formulario -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,127 +57,149 @@
                 app:cardElevation="6dp"
                 android:layout_marginBottom="16dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:background="@color/cardview_light_background"
-                >
-
-                <!-- Campo Pregunta -->
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:hint="Pregunta">
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:background="@color/cardview_light_background">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etPregunta"
+                    <ImageView
+                        android:id="@+id/ivPreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/gray_light"
+                        android:scaleType="centerCrop" />
+
+                    <!-- Botón flotante para añadir imagen -->
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fabAddImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:src="@drawable/ic_camera"
+                        app:backgroundTint="@color/primaryColor"
+                        app:tint="@null" />
+
+                    <!-- Pregunta -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"
-                        android:lines="3"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_marginBottom="12dp"
+                        android:hint="Pregunta">
 
-                <!-- Opciones de respuesta -->
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:hint="Opción 1">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPregunta"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine"
+                            android:lines="3"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etOpcion1"
+                    <!-- Opciones -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:hint="Opción 1">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:hint="Opción 2">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etOpcion1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etOpcion2"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:hint="Opción 2">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:hint="Opción 3">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etOpcion2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etOpcion3"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:hint="Opción 3">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:hint="Opción 4">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etOpcion3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etOpcion4"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:hint="Opción 4">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:hint="Respuesta correcta (1-4)"
-                    app:startIconDrawable="@drawable/ic_info"
-                    app:startIconTint="@color/primaryColor">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etOpcion4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etRespuestaCorrecta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="1"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    <!-- Respuesta -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:hint="Respuesta correcta (1-4)"
+                        app:startIconDrawable="@drawable/ic_info"
+                        app:startIconTint="@color/primaryColor">
 
-            <!-- Botón Guardar -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnGuardar"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etRespuestaCorrecta"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:maxLength="1"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Botón Guardar -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnGuardar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Guardar Pregunta"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_marginTop="8dp"
+                        app:cornerRadius="8dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Título lista -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Listado de Preguntas"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Lista de preguntas -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPreguntas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Guardar Pregunta"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_marginTop="8dp"
-                app:cornerRadius="8dp"/>
+                android:scrollbars="vertical"
+                android:layout_marginBottom="16dp"/>
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- Lista de preguntas -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Listado de Preguntas"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPreguntas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:layout_marginTop="8dp"/>
-</LinearLayout>
     </androidx.core.widget.NestedScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

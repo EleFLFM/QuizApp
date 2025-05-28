@@ -8,7 +8,7 @@ public class Pregunta {
     private String opcion3;
     private String opcion4;
     private int respuestaCorrecta;
-
+    private String imagenUrl;
     // Constructor vacío necesario para Firebase
     public Pregunta() {
     }
@@ -17,13 +17,24 @@ public class Pregunta {
         return opcionSeleccionada == respuestaCorrecta;
     }
 
-    public Pregunta(String texto, String opcion1, String opcion2, String opcion3, String opcion4, int respuestaCorrecta) {
+    // Constructor modificado
+    public Pregunta(String texto, String opcion1, String opcion2, String opcion3,
+                    String opcion4, int respuestaCorrecta, String imagenUrl) {
         this.texto = texto;
         this.opcion1 = opcion1;
         this.opcion2 = opcion2;
         this.opcion3 = opcion3;
         this.opcion4 = opcion4;
         this.respuestaCorrecta = respuestaCorrecta;
+        this.imagenUrl = imagenUrl;
+    }
+    // Getters y setters (añade el de imagenUrl)
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
+
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
     }
 
     // Getters y setters

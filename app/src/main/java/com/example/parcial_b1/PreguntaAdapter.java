@@ -3,24 +3,28 @@ package com.example.parcial_b1;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
 
 public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.PreguntaViewHolder> {
+
+    private List<Pregunta> listaPreguntas;
+    private OnPreguntaClickListener listener;
 
     public interface OnPreguntaClickListener {
         void onPreguntaClick(Pregunta pregunta);
     }
 
-    private List<Pregunta> preguntas;
-    private OnPreguntaClickListener listener;
-
-    public PreguntaAdapter(List<Pregunta> preguntas, OnPreguntaClickListener listener) {
-        this.preguntas = preguntas;
+    public PreguntaAdapter(List<Pregunta> listaPreguntas, OnPreguntaClickListener listener) {
+        this.listaPreguntas = listaPreguntas;
         this.listener = listener;
     }
 
@@ -34,36 +38,38 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.Pregun
 
     @Override
     public void onBindViewHolder(@NonNull PreguntaViewHolder holder, int position) {
-        Pregunta pregunta = preguntas.get(position);
-        holder.tvPregunta.setText(pregunta.getTexto());
-        holder.tvOpciones.setText(
-                "1) " + pregunta.getOpcion1() + "\n" +
-                        "2) " + pregunta.getOpcion2() + "\n" +
-                        "3) " + pregunta.getOpcion3() + "\n" +
-                        "4) " + pregunta.getOpcion4()
-        );
-        holder.tvRespuesta.setText("Respuesta correcta: " + pregunta.getRespuestaCorrecta());
-
-        holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onPreguntaClick(pregunta);
-            }
-        });
+        Pregunta pregunta = listaPreguntas.get(position);
+        holder.bind(pregunta);
+        holder.itemView.setOnClickListener(v -> listener.onPreguntaClick(pregunta));
     }
 
     @Override
     public int getItemCount() {
-        return preguntas.size();
+        return listaPreguntas.size();
     }
 
     static class PreguntaViewHolder extends RecyclerView.ViewHolder {
-        TextView tvPregunta, tvOpciones, tvRespuesta;
+        private TextView tvPregunta;
+        private ImageView ivImagen;
 
         public PreguntaViewHolder(@NonNull View itemView) {
             super(itemView);
             tvPregunta = itemView.findViewById(R.id.tvPregunta);
-            tvOpciones = itemView.findViewById(R.id.tvOpciones);
-            tvRespuesta = itemView.findViewById(R.id.tvRespuesta);
+            ivImagen = itemView.findViewById(R.id.ivImagen);
+        }
+
+        public void bind(Pregunta pregunta) {
+            tvPregunta.setText(pregunta.getTexto());
+
+            if (pregunta.getImagenUrl() != null && !pregunta.getImagenUrl().isEmpty()) {
+                ivImagen.setVisibility(View.VISIBLE);
+                Glide.with(itemView.getContext())
+                        .load(pregunta.getImagenUrl())
+                        .apply(new RequestOptions().centerCrop())
+                        .into(ivImagen);
+            } else {
+                ivImagen.setVisibility(View.GONE);
+            }
         }
     }
 }

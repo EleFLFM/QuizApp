@@ -62,7 +62,19 @@
                 app:cornerRadius="8dp"
                 android:textColor="@color/primaryColor"
                 android:textAllCaps="false"/>
-
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnIntentarOtraVez"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Intentar otra vez"
+                app:icon="@drawable/ic_user"
+                app:iconTint="@color/primaryColor"
+                app:strokeColor="@color/primaryColor"
+                app:cornerRadius="8dp"
+                android:textColor="@color/primaryColor"
+                android:textAllCaps="false"/>
             <!-- Botón para salir -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSalir"

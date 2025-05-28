@@ -24,4 +24,6 @@
     <color name="primaryColor">#266fe4</color>
     <color name="primaryDarkColor">#1a4b9f</color>
     <color name="purple_50">#F3E5F5</color>
+    <color name="gray_dark">#625F5F</color>
+    <color name="gray_light">#696767</color>
 </resources>
